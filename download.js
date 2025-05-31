@@ -7,10 +7,13 @@ const pathOutput = path.join(__dirname, '/temp/video.mp4');
 
 function download(inputs) {
 
-    ytdl(inputs).pipe(fss.createWriteStream(pathOutput))
+    console.log(inputs);
+
+    ytdl(inputs.content).pipe(fss.createWriteStream(pathOutput))
     .on('finish', () => {
         console.log('Download Complete');
-        convert();
+        console.log(inputs.state)
+        convert(inputs.state);
     })
 
 }

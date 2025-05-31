@@ -1,9 +1,34 @@
 const { download } = require('./download');
-const { convert } = require('./worker');
+const express = require("express");
+const PORT = 3000;
 
 
-function worker(){
-    download('https://www.youtube.com/watch?v=EorTOKX1420');
+function init () {
+    
+    const app = express();
+    app.use(express.json());
+
+    app.get('/home', (req, res) => {
+        const content = req.body.URL;
+        const state = req.body.state;
+        
+        if(!(content.includes("https://www.youtube.com/watch?v="))){
+            return res.status(404).json({
+                error: "Invalid Link"
+            });
+        }
+
+        download({content, state});
+
+        return res.status(200).json({
+            body: "Valid"
+        });
+    });
+
+    app.listen(PORT, () => {
+        console.log(`App is Listening on PORT:${PORT}`);
+    });
+
 }
 
-worker();
+init();

@@ -1,0 +1,22 @@
+const ffmpeg = require("fluent-ffmpeg");
+const ffmpegStatic = require("ffmpeg-static");
+const path = require("path");
+
+ffmpeg.setFfmpegPath(ffmpegStatic);
+
+function worker(pathInput, pathOutput){
+
+    ffmpeg(pathInput)
+    .output(pathOutput)
+    .videoCodec('libx264')
+    .audioCodec('aac')
+    .size('2560x1440')        // target 1440p
+    .autopad('black')
+    .audioBitrate('128k')
+    .outputOptions('-preset fast', '-crf 23')
+    .on('end', () => console.log('1440p done'))
+    .on('error', err => console.error(err))
+
+}
+
+module.exports = worker;
