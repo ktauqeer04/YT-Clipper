@@ -18,10 +18,10 @@ function worker(pathInput, pathOutput) {
         .size('1920x1080')        // target 1080p
         .autopad('black')
         .audioBitrate('128k')
-        .outputOptions('-preset fast', '-crf 23')
+        .outputOptions(['-preset', 'fast', '-crf', '23'])
         .on('end', () => console.log('1080p done'))
         .on('error', err => console.error(err))
-
+        .run();
 }
 
 module.exports = worker;

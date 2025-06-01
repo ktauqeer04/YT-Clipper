@@ -14,9 +14,10 @@ function worker(pathInput, pathOutput) {
         .size('854x480')          // target 480p (16:9)
         .autopad('black')
         .audioBitrate('128k')
-        .outputOptions('-preset fast', '-crf 23')
+        .outputOptions(['-preset', 'fast', '-crf', '23'])
         .on('end', () => console.log('480p done'))
         .on('error', err => console.error(err))
+        .run();
 
 }
 

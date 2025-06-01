@@ -13,10 +13,10 @@ function worker(pathInput, pathOutput){
     .size('2560x1440')        // target 1440p
     .autopad('black')
     .audioBitrate('128k')
-    .outputOptions('-preset fast', '-crf 23')
+    .outputOptions(['-preset', 'fast', '-crf', '23'])
     .on('end', () => console.log('1440p done'))
     .on('error', err => console.error(err))
-
+    .run()
 }
 
 module.exports = worker;
