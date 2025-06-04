@@ -7,16 +7,22 @@ const pathOutput = path.join(__dirname, '/temp/video.mp4');
 
 function download(inputs) {
 
-    console.log(inputs);
+    ytdl.getInfo(inputs).then((info) => {
+        const format = ytdl.chooseFormat(info.formats, {quality: "247"});
+        const outputFilePath = `${info.videoDetails.title}.mp4`;
+        const outputstream = fss.createWriteStream(outputFilePath);
 
-    ytdl(inputs.content).pipe(fss.createWriteStream(pathOutput))
-    .on('finish', () => {
-        console.log('Download Complete');
-        console.log(inputs.state)
-        convert(inputs.state);
+        ytdl.downloadFromInfo(info, {format: format}).pipe(outputstream);
+
+        outputstream.on('finish', () => {
+            console.log("finished downloading....");
+        });
+    }).catch((error) => {
+        console.error(error);
     })
 
 }
+
 
 module.exports = {
     download

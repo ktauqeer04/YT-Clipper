@@ -1,9 +1,8 @@
 const ffmpeg = require("fluent-ffmpeg");
 const ffmpegStatic = require("ffmpeg-static");
 const path = require("path");
-const { worker360, worker480, worker720, worker1080, worker1440 } = require('./conversion/index');
+const { worker360, worker480, worker720, worker1080, worker1440 } = require('./conversion/index'); 
 
-ffmpeg.setFfmpegPath(ffmpegStatic);
 const pathInput = path.join(__dirname, "temp", "video.mp4");
 const pathOutput = path.join(__dirname, "videoOutput", "output.mp4");
 

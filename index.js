@@ -18,7 +18,7 @@ function init () {
             });
         }
 
-        download({content, state});
+        download(content);
 
         return res.status(200).json({
             body: "Valid"

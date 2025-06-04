@@ -2,14 +2,12 @@ const ffmpeg = require("fluent-ffmpeg");
 const ffmpegStatic = require("ffmpeg-static");
 const path = require("path");
 
-ffmpeg.setFfmpegPath(ffmpegStatic);
-const pathInput = path.join(__dirname, "temp", "video.mp4");
-const pathOutput = path.join(__dirname, "videoOutput", "output.mp4");
 
 
 function worker(pathInput, pathOutput) {
 
     console.log(pathInput);
+    const startTime = Date.now();
 
     ffmpeg(pathInput)
         .output(pathOutput)
@@ -19,7 +17,13 @@ function worker(pathInput, pathOutput) {
         .autopad('black')
         .audioBitrate('128k')
         .outputOptions(['-preset', 'fast', '-crf', '23'])
-        .on('end', () => console.log('1080p done'))
+        .on('end', () => {
+            console.log('1080p done');
+            const endTime = Date.now(); // Capture end time
+            const duration = ((endTime - startTime) / 1000).toFixed(2); // seconds
+            console.log(`\n1080p done. Time taken: ${duration} seconds`);
+
+        })
         .on('error', err => console.error(err))
         .run();
 }
